@@ -268,6 +268,9 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Http.Owin, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.9\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -370,6 +373,7 @@
     <Compile Include="Models\FeedbackViewModel.cs" />
     <Compile Include="Models\FooterViewModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\PageViewModel.cs" />
     <Compile Include="Models\PostCategoryViewModel.cs" />
     <Compile Include="Models\PostTagViewModel.cs" />
@@ -538,6 +542,8 @@
     <Content Include="Assets\admin\libs\bootstrap\js\tooltip.js" />
     <Content Include="Assets\admin\libs\bootstrap\js\transition.js" />
     <Content Include="Assets\admin\libs\bootstrap\package.js" />
+    <Content Include="Assets\admin\libs\checklist-model\checklist-model.js" />
+    <Content Include="Assets\admin\libs\checklist-model\LICENSE.txt" />
     <Content Include="Assets\admin\libs\ckeditor\adapters\jquery.js" />
     <Content Include="Assets\admin\libs\ckeditor\ckeditor.js" />
     <Content Include="Assets\admin\libs\ckeditor\config.js" />
@@ -5248,6 +5254,9 @@
     <Content Include="Assets\admin\libs\jquery-ui\README.md" />
     <Content Include="Assets\admin\libs\jquery-ui\ui\.DS_Store" />
     <Content Include="Assets\admin\libs\jquery-ui\ui\.jshintrc" />
+    <Content Include="Assets\admin\libs\checklist-model\.bower.json" />
+    <Content Include="Assets\admin\libs\checklist-model\bower.json" />
+    <Content Include="Assets\admin\libs\checklist-model\readme.md" />
     <None Include="packages.config" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\Layouts.cshtml" />
@@ -5262,6 +5271,7 @@
     <Content Include="Views\Page\Index.cshtml" />
     <Content Include="Views\Contact\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TechZone.Common\TechZone.Common.csproj">
