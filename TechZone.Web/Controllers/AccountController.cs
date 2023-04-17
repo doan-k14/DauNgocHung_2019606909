@@ -141,6 +141,7 @@ namespace TechZone.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOut()
         {
+            Session[CommonConstants.SessionCart] = null;
             IAuthenticationManager authenticationManager = HttpContext.GetOwinContext().Authentication;
             authenticationManager.SignOut();
             return RedirectToAction("Index", "Home");
