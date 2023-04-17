@@ -42,6 +42,7 @@ namespace TechZone.Service
         void IncreaseView(int id);
 
         IEnumerable<Product> GetListProductByTag(string tagId, int page, int pagesize, out int totalRow);
+
         bool SellProduct(int productId, int quantity);
     }
 
@@ -239,6 +240,7 @@ namespace TechZone.Service
             var model = _productRepository.GetListProductByTag(tagId, page, pagesize, out totalRow);
             return model;
         }
+        //statictis
         public bool SellProduct(int productId, int quantity)
         {
             var product = _productRepository.GetSingleById(productId);
