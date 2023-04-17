@@ -51,7 +51,7 @@
                 roleManager.Create(new IdentityRole { Name = "User" });
             }
 
-            var adminUser = manager.FindByEmail("tedu.international@gmail.com");
+            var adminUser = manager.FindByEmail("techzone.international@gmail.com");
 
             manager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
         }
