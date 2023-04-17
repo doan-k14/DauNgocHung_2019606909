@@ -13,7 +13,6 @@ namespace TechZone.Service
 
     public class OrderService : IOrderService
     {
-        //private
         private IOrderRepository _orderRepository;
         private IOrderDetailRepository _orderDetailRepository;
         private IUnitOfWork _unitOfWork;
