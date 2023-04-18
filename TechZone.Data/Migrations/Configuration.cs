@@ -1,16 +1,15 @@
 ﻿namespace TechZone.Data.Migrations
 {
-    using Microsoft.AspNet.Identity.EntityFramework;
+    using Common;
     using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Model.Models;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Data.Entity.Validation;
     using System.Diagnostics;
     using System.Linq;
-    using TechZone.Common;
-    using TechZone.Model.Models;
 
     internal sealed class Configuration : DbMigrationsConfiguration<TechZone.Data.TechZoneDbContext>
     {
@@ -25,35 +24,74 @@
             CreateProductCategorySample(context);
             CreateSlide(context);
             CreatePage(context);
+
             CreateContactDetail(context);
+
+            CreateConfigTitle(context);
             //  This method will be called after migrating to the latest version.
+        }
+
+        private void CreateConfigTitle(TechZoneDbContext context)
+        {
+            if (!context.SystemConfigs.Any(x => x.Code == "HomeTitle"))
+            {
+                context.SystemConfigs.Add(new SystemConfig()
+                {
+                    Code = "HomeTitle",
+                    ValueString = "Trang chủ TechZone",
+
+                });
+            }
+            if (!context.SystemConfigs.Any(x => x.Code == "HomeMetaKeyword"))
+            {
+                context.SystemConfigs.Add(new SystemConfig()
+                {
+                    Code = "HomeMetaKeyword",
+                    ValueString = "Trang chủ TechZone",
+
+                });
+            }
+            if (!context.SystemConfigs.Any(x => x.Code == "HomeMetaDescription"))
+            {
+                context.SystemConfigs.Add(new SystemConfig()
+                {
+                    Code = "HomeMetaDescription",
+                    ValueString = "Trang chủ TechZone",
+
+                });
+            }
         }
 
         private void CreateUser(TechZoneDbContext context)
         {
-            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new TechZoneDbContext()));
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new TechZoneDbContext()));
-            var user = new ApplicationUser()
+            if (!context.Users.Any())
             {
-                UserName = "techzone",
-                Email = "techzone@gmail.com",
-                EmailConfirmed = true,
-                BirthDay = DateTime.Now,
-                FullName = "Dau Ngoc Hung"
+                var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new TechZoneDbContext()));
 
-            };
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new TechZoneDbContext()));
 
-            manager.Create(user, "123654$");
+                var user = new ApplicationUser()
+                {
+                    UserName = "admin",
+                    Email = "techzone@gmail.com",
+                    EmailConfirmed = true,
+                    BirthDay = DateTime.Now,
+                    FullName = "Admin"
 
-            if (!roleManager.Roles.Any())
-            {
-                roleManager.Create(new IdentityRole { Name = "Admin" });
-                roleManager.Create(new IdentityRole { Name = "User" });
+                };
+
+                manager.Create(user, "123456");
+
+                if (!roleManager.Roles.Any())
+                {
+                    roleManager.Create(new IdentityRole { Name = "Admin" });
+                    roleManager.Create(new IdentityRole { Name = "User" });
+                }
+
+                var adminUser = manager.FindByEmail("techzone.international@gmail.com");
+
+                manager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
             }
-
-            var adminUser = manager.FindByEmail("techzone.international@gmail.com");
-
-            manager.AddToRoles(adminUser.Id, new string[] { "Admin", "User" });
         }
 
         private void CreateProductCategorySample(TechZone.Data.TechZoneDbContext context)
@@ -78,6 +116,7 @@
             {
             }
         }
+
         private void CreateSlide(TechZoneDbContext context)
         {
             if (context.Slides.Count() == 0)
