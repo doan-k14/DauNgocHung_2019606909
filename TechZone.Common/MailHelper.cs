@@ -13,6 +13,8 @@ namespace TechZone.Common
         {
             try
             {
+                // 30-05-2022 Google huy Ung dung kem an toan
+                // password = mat khau ung dung ( xac minh 2 buoc cho email -> lay key mat khau ung dung)
                 var host = ConfigHelper.GetByKey("SMTPHost");
                 var port = int.Parse(ConfigHelper.GetByKey("SMTPPort"));
                 var fromEmail = ConfigHelper.GetByKey("FromEmailAddress");

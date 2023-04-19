@@ -44,6 +44,13 @@ namespace TechZone.Web.Controllers
 
                 ViewData["SuccessMsg"] = "Gửi phản hồi thành công";
 
+                string content = System.IO.File.ReadAllText(Server.MapPath("/Assets/client/template/contact_template.html"));
+                content = content.Replace("{{Name}}", feedbackViewModel.Name);
+                content = content.Replace("{{Email}}", feedbackViewModel.Email);
+                content = content.Replace("{{Message}}", feedbackViewModel.Message);
+                var adminEmail = ConfigHelper.GetByKey("AdminEmail");
+                MailHelper.SendMail(adminEmail, "Thông tin liên hệ từ website", content);
+
                 feedbackViewModel.Name = "";
                 feedbackViewModel.Message = "";
                 feedbackViewModel.Email = "";
