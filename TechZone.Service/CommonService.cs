@@ -21,6 +21,7 @@ namespace TechZone.Service
         private IUnitOfWork _unitOfWork;
         private ISlideRepository _slideRepository;
         ISystemConfigRepository _systemConfigRepository;
+
         public CommonService(IFooterRepository footerRepository, IUnitOfWork unitOfWork, ISlideRepository slideRepository, ISystemConfigRepository systemConfigRepository)
         {
             _footerRepository = footerRepository;
@@ -33,13 +34,15 @@ namespace TechZone.Service
         {
             return _footerRepository.GetSingleByCondition(x => x.ID == CommonConstants.DefaultFooterId);
         }
-        public SystemConfig GetSystemConfig(string code)
-        {
-            return _systemConfigRepository.GetSingleByCondition(x => x.Code == code);
-        }
+
         public IEnumerable<Slide> GetSlides()
         {
             return _slideRepository.GetMulti(x => x.Status);
+        }
+
+        public SystemConfig GetSystemConfig(string code)
+        {
+            return _systemConfigRepository.GetSingleByCondition(x => x.Code == code);
         }
     }
 }

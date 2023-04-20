@@ -17,7 +17,7 @@
         }
 
         function loadProductCategoryDetail() {
-            apiService.get('api/productCategory/getbyid/' + $stateParams.id,null, function (result) {
+            apiService.get('api/productCategory/getbyid/' + $stateParams.id, null, function (result) {
                 $scope.productCategory = result.data;
             }, function (error) {
                 notificationService.displayError(error.data);
@@ -35,7 +35,7 @@
         }
         function loadParentCategory() {
             apiService.get('api/productcategory/getallparents', null, function (result) {
-                $scope.parentCategories = result.data;
+                $scope.parentCategories = commonService.getTree(result.data, "ID", "ParentID");
             }, function () {
                 console.log('Cannot get list parent');
             });

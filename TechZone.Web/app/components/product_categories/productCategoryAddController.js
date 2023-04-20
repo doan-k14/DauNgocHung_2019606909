@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('productCategoryAddController', productCategoryAddController);
 
-    productCategoryAddController.$inject = ['apiService', '$scope', 'notificationService', '$state','commonService'];
+    productCategoryAddController.$inject = ['apiService', '$scope', 'notificationService', '$state', 'commonService'];
 
     function productCategoryAddController(apiService, $scope, notificationService, $state, commonService) {
         $scope.productCategory = {
@@ -27,12 +27,11 @@
         }
         function loadParentCategory() {
             apiService.get('api/productcategory/getallparents', null, function (result) {
-                $scope.parentCategories = result.data;
+                $scope.parentCategories = commonService.getTree(result.data, "ID", "ParentID");
             }, function () {
                 console.log('Cannot get list parent');
             });
         }
-
         loadParentCategory();
     }
 

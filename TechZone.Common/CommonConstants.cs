@@ -10,5 +10,7 @@
         public const string HomeTitle = "HomeTitle";
         public const string HomeMetaKeyword = "HomeMetaKeyword";
         public const string HomeMetaDescription = "HomeMetaDescription";
+
+        public const string Admin = "Admin";
     }
 }

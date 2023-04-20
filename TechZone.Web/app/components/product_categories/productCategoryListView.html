@@ -2,7 +2,6 @@
 <section class="content-header">
     <h1>
         Danh mục sản phẩm
-
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/admin"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
@@ -28,7 +27,7 @@
                     </div><!-- /input-group -->
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-success" ui-sref="add_product_category"><i class="fa fa-plus"></i> Thêm mới</button>
+                    <button class="btn btn-success" ui-sref="add_product_category">Thêm mới</button>
                     <button class="btn btn-danger" ng-click="deleteMultiple()" id="btnDelete" disabled>Xóa</button>
                 </div>
             </div>
@@ -38,7 +37,7 @@
                         <tr>
                             <td><input name="all" type="checkbox" ng-click="selectAll()" /></td>
                             <th style="width: 5%">ID</th>
-                            <th style="width:55%">Tên danh mục</th>
+                            <th style="width: 55%">Tên danh mục</th>
                             <th style="width: 20%">Ngày tạo</th>
                             <th style="width: 10%">Trạng thái</th>
                             <th style="width: 10%">Thao tác</th>
@@ -46,7 +45,7 @@
                         <tr ng-repeat="item in productCategories">
                             <td><input type="checkbox" ng-model="item.checked" name="all" /></td>
                             <td>{{item.ID}}</td>
-                            <td>{{item.Name}}</td>
+                            <td><a ui-sref="manufacturer({id:item.ID})">{{item.Name}}</a></td>
                             <td>
                                 {{item.CreatedDate  | date:'dd/MM/yyyy hh:mm:ss'}}
                             </td>
@@ -67,13 +66,13 @@
                             </tr>
                         </tfoot>
                     </table>
-                </div>
-                <div ng-if="loading">
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-4">
-                        <label class="label label-primary">Đang tải...</label>
+                    <div ng-if="loading">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4 text-center">
+                            <label class="label label-primary">Đang tải...</label>
+                        </div>
+                        <div class="col-xs-4"></div>
                     </div>
-                    <div class="col-xs-4"></div>
                 </div>
             </div>
         </div><!-- /.box-body -->
