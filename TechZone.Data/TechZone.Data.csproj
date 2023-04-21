@@ -133,6 +133,10 @@
     <Compile Include="Migrations\202304201527402_menu.designer.cs">
       <DependentUpon>202304201527402_menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304211544013_iexcel.cs" />
+    <Compile Include="Migrations\202304211544013_iexcel.designer.cs">
+      <DependentUpon>202304211544013_iexcel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
@@ -196,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304201527402_menu.resx">
       <DependentUpon>202304201527402_menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304211544013_iexcel.resx">
+      <DependentUpon>202304211544013_iexcel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

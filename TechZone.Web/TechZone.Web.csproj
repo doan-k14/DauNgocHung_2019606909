@@ -442,6 +442,13 @@
     <Content Include="app\components\home\rootController.js" />
     <Content Include="app\components\login\loginController.js" />
     <Content Include="app\components\login\loginView.html" />
+    <Content Include="app\components\manufacturer\manufacturer.module.js" />
+    <Content Include="app\components\manufacturer\manufacturerAddController.js" />
+    <Content Include="app\components\manufacturer\manufacturerAddView.html" />
+    <Content Include="app\components\manufacturer\manufacturerEditController.js" />
+    <Content Include="app\components\manufacturer\manufacturerEditView.html" />
+    <Content Include="app\components\manufacturer\manufacturerListController.js" />
+    <Content Include="app\components\manufacturer\manufacturerListView.html" />
     <Content Include="app\components\products\productImportController.js" />
     <Content Include="app\components\products\productImportView.html" />
     <Content Include="app\components\products\products.module.js" />
@@ -462,6 +469,7 @@
     <Content Include="app\components\statistic\revenueStatisticView.html" />
     <Content Include="app\components\statistic\statistic.module.js" />
     <Content Include="app\shared\directives\asDateDirective.js" />
+    <Content Include="app\shared\directives\fileUpload.directive.js" />
     <Content Include="app\shared\directives\pagerDirective.html" />
     <Content Include="app\shared\directives\pagerDirective.js" />
     <Content Include="app\shared\filters\statusFilter.js" />
@@ -5193,6 +5201,7 @@
     <Content Include="Assets\admin\libs\toastr\toastr.js" />
     <Content Include="Assets\admin\libs\toastr\toastr.min.css" />
     <Content Include="Assets\admin\libs\toastr\toastr.min.js" />
+    <Content Include="Assets\admin\templates\product-detail.html" />
     <Content Include="Assets\client\css\bootstrap.css" />
     <Content Include="Assets\client\css\custom.css" />
     <Content Include="Assets\client\css\etalage.css" />
@@ -5617,6 +5626,7 @@
     <Content Include="Assets\admin\libs\angular-ui-select\LICENSE" />
     <Content Include="Assets\admin\libs\angular-ui-select\package.json" />
     <Content Include="Assets\admin\libs\angular-ui-select\README.md" />
+    <Content Include="Assets\admin\templates\ProductImportTemplate.xlsx" />
     <None Include="packages.config" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\Layouts.cshtml" />

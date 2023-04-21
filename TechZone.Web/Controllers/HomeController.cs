@@ -21,7 +21,7 @@ namespace TechZone.Web.Controllers
 
         public HomeController(IProductCategoryService productCategoryService,
             IProductService productService,
-            ICommonService commonService, 
+            ICommonService commonService,
             IMappingService mappingService)
         {
             _productCategoryService = productCategoryService;
@@ -60,7 +60,7 @@ namespace TechZone.Web.Controllers
         }
 
         [ChildActionOnly]
-        [OutputCache(Duration = 3600)]
+        //[OutputCache(Duration = 3600)]
         public ActionResult Footer()
         {
             var footerModel = _commonService.GetFooter();
@@ -75,7 +75,7 @@ namespace TechZone.Web.Controllers
         }
 
         [ChildActionOnly]
-        [OutputCache(Duration = 3600)]
+        //[OutputCache(Duration = 3600)]
         public ActionResult Category()
         {
             var model = _productCategoryService.GetAll();
