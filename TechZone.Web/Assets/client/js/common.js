@@ -29,7 +29,7 @@
             return $("<li>")
                 .append("<a>" + item.label + "</a>")
                 .appendTo(ul);
-            };
+        };
         $('.btnAddToCart').off('click').on('click', function (e) {
             e.preventDefault();
             var productId = parseInt($(this).data('id'));

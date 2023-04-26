@@ -1,9 +1,9 @@
 ﻿(function (app) {
     app.controller('productListController', productListController);
 
-    productListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter'];
+    productListController.$inject = ['$scope', 'apiService', 'notificationService', '$ngBootbox', '$filter', '$stateParams'];
 
-    function productListController($scope, apiService, notificationService, $ngBootbox, $filter) {
+    function productListController($scope, apiService, notificationService, $ngBootbox, $filter, $stateParams) {
         $scope.products = [];
         $scope.page = 0;
         $scope.pagesCount = 0;
@@ -11,17 +11,13 @@
         $scope.keyword = '';
         $scope.loading = true;
         $scope.count = 0;
-
         $scope.search = search;
-
         $scope.deleteProduct = deleteProduct;
-
         $scope.selectAll = selectAll;
-
         $scope.deleteMultiple = deleteMultiple;
-
         $scope.exportExcel = exportExcel;
         $scope.exportPdf = exportPdf;
+
         function exportExcel() {
             var config = {
                 params: {
@@ -58,7 +54,7 @@
             $ngBootbox.confirm('Bạn có chắc muốn xóa ' + $scope.count + ' bản ghi này không?').then(function () {
                 var listId = [];
                 $.each($scope.selected, function (i, item) {
-                    listId.push(item.ID);
+                    listId.push(item.Product.ID);
                 });
                 var config = {
                     params: {
@@ -125,6 +121,7 @@
             var config = {
                 params: {
                     keyword: $scope.keyword,
+                    categoryId: $stateParams.categoryId || 0,
                     page: page,
                     pageSize: 20
                 }

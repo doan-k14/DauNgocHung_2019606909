@@ -54,7 +54,7 @@ namespace TechZone.Service
         {
             if (!string.IsNullOrEmpty(keyword))
                 return _ProductCategoryRepository.GetMulti(
-                    x => x.Name.Contains(keyword) || 
+                    x => x.Name.Contains(keyword) ||
                     x.Description.Contains(keyword) ||
                     x.Alias.Contains(keyword));
             else

@@ -1,7 +1,7 @@
 ﻿(function (app) {
     app.controller('manufacturerAddController', manufacturerAddController);
 
-    manufacturerAddController.$inject = ['apiService', '$scope', 'notificationService', '$state', 'commonService','$stateParams'];
+    manufacturerAddController.$inject = ['apiService', '$scope', 'notificationService', '$state', 'commonService', '$stateParams'];
 
     function manufacturerAddController(apiService, $scope, notificationService, $state, commonService, $stateParams) {
         $scope.manufacturer = {
@@ -40,5 +40,4 @@
         getProductCategory();
         loadParentCategory();
     }
-
-})(angular.module('techzone.product_categories'));
+})(angular.module('techzone.manufacturer'));

@@ -9,25 +9,42 @@
             languague: 'vi',
             height: '200px'
         }
-        $scope.flatFolders = [];
+
         $scope.UpdateProduct = UpdateProduct;
         $scope.moreImages = [];
         $scope.GetSeoTitle = GetSeoTitle;
+        $scope.loadManufacturer = loadManufacturer;
 
         function GetSeoTitle() {
             $scope.product.Alias = commonService.getSeoTitle($scope.product.Name);
         }
 
         function loadProductDetail() {
-            apiService.get('api/product/getbyid/' + $stateParams.id, null, function (result) {
+            apiService.get('api/product/getbyid/' + $stateParams.idProduct, null, function (result) {
                 $scope.product = result.data;
                 $scope.moreImages = JSON.parse($scope.product.MoreImages);
+                apiService.get('/api/productcategory/getbyid/' + $scope.product.CategoryID, null, function (respose) {
+                    $scope.product.ProductCategoryID = respose.data.ParentID;
+                    $scope.product.CategoryID = respose.data.ID;
+                }, function () { });
+                var config = {
+                    params: {
+                        keyword: '',
+                        page: 0,
+                        pageSize: 100
+                    }
+                }
+                apiService.get('api/productcategory/getallManufacturer/' + $stateParams.idCategory, config, function (resultManufacturer) {
+                    $scope.productManufacturer = resultManufacturer.data.Items;
+                }, function () { });
             }, function (error) {
                 notificationService.displayError(error.data);
             });
         }
         function UpdateProduct() {
-            $scope.product.MoreImages = JSON.stringify($scope.moreImages)
+            $scope.product.MoreImages = JSON.stringify($scope.moreImages);
+            if (!$scope.product.CategoryID)
+                $scope.product.CategoryID = $scope.product.ProductCategoryID;
             apiService.put('api/product/update', $scope.product,
                 function (result) {
                     notificationService.displaySuccess(result.data.Name + ' đã được cập nhật.');
@@ -36,16 +53,34 @@
                     notificationService.displayError('Cập nhật không thành công.');
                 });
         }
+
         function loadProductCategory() {
-            apiService.get('api/productcategory/getallparents', null, function (result) {
-                $scope.productCategories = commonService.getTree(result.data, "ID", "ParentID");
-                $scope.productCategories.forEach(function (item) {
-                    recur(item, 0, $scope.flatFolders);
-                });
-            }, function () {
-                console.log('Cannot get list parent');
-            });
+            var config = {
+                params: {
+                    keyword: '',
+                    page: 0,
+                    pageSize: 100
+                }
+            }
+            apiService.get('api/productcategory/getallProductCategory', config, function (result) {
+                $scope.productCategories = result.data.Items;
+            }, function () { });
         }
+
+        function loadManufacturer() {
+            $scope.product.CategoryID = null;
+            var config = {
+                params: {
+                    keyword: '',
+                    page: 0,
+                    pageSize: 100
+                }
+            }
+            apiService.get('api/productcategory/getallManufacturer/' + $scope.product.ProductCategoryID, config, function (result) {
+                $scope.productManufacturer = result.data.Items;
+            }, function () { });
+        }
+
         $scope.ChooseImage = function () {
             var finder = new CKFinder();
             finder.selectActionFunction = function (fileUrl) {
@@ -55,38 +90,27 @@
             }
             finder.popup();
         }
+
+        $scope.images = [];
+
         $scope.ChooseMoreImage = function () {
             var finder = new CKFinder();
             finder.selectActionFunction = function (fileUrl) {
                 $scope.$apply(function () {
-                    $scope.moreImages.push(fileUrl);
+                    if (!Array.isArray($scope.moreImages)) {
+                        $scope.moreImages = [];
+                    }
+                    if ($scope.moreImages.indexOf(fileUrl) === -1) {
+                        $scope.moreImages.push(fileUrl);
+                    }
                 })
 
             }
             finder.popup();
         }
-        function times(n, str) {
-            var result = '';
-            for (var i = 0; i < n; i++) {
-                result += str;
-            }
-            return result;
-        };
-        function recur(item, level, arr) {
-            arr.push({
-                Name: times(level, '–') + ' ' + item.Name,
-                ID: item.ID,
-                Level: level,
-                Indent: times(level, '–')
-            });
-            if (item.children) {
-                item.children.forEach(function (item) {
-                    recur(item, level + 1, arr);
-                });
-            }
-        };
+
         loadProductCategory();
         loadProductDetail();
+        loadManufacturer();
     }
-
 })(angular.module('techzone.products'));

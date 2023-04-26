@@ -18,7 +18,7 @@
         }
 
         function loadManufacturerDetail() {
-            apiService.get('api/productCategory/getbyid/' + $stateParams.idManufacturer,null, function (result) {
+            apiService.get('api/productCategory/getbyid/' + $stateParams.idManufacturer, null, function (result) {
                 $scope.manufacturer = result.data;
             }, function (error) {
                 notificationService.displayError(error.data);
@@ -52,4 +52,4 @@
         loadManufacturerDetail();
     }
 
-})(angular.module('techzone.product_categories'));
+})(angular.module('techzone.manufacturer'));

@@ -68,10 +68,18 @@ namespace TechZone.Web.Api
 
         [Route("getall")]
         [HttpGet]
-        public IHttpActionResult GetAll(string keyword, int page = 0, int pageSize = 20)
+        public IHttpActionResult GetAll(string keyword, int categoryId = 0, int page = 0, int pageSize = 20)
         {
             int totalRow = 0;
-            var model = _productService.GetAll(keyword);
+            IEnumerable<Product> model;
+            if (categoryId == 0)
+            {
+                model = _productService.GetAll(keyword);
+            }
+            else
+            {
+                model = _productService.GetAll(keyword, categoryId);
+            }
 
             totalRow = model.Count();
             var query = model.OrderByDescending(x => x.CreatedDate).Skip((page) * pageSize).Take(pageSize);
@@ -317,7 +325,7 @@ namespace TechZone.Web.Api
             //do stuff with files if you wish
             if (result.FormData["categoryId"] == null)
             {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bạn chưa chọn danh mục sản phẩm.");
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Bạn chưa chọn nhà sản xuất.");
             }
 
             //Upload files
@@ -366,6 +374,7 @@ namespace TechZone.Web.Api
 
             return Request.CreateResponse(HttpStatusCode.OK, "Đã nhập " + addedCount + " sản phẩm thành công.");
         }
+
         private List<Product> ReadProductFromExcel(string fullPath, int categoryId)
         {
             using (var package = new ExcelPackage(new FileInfo(fullPath)))
@@ -432,9 +441,8 @@ namespace TechZone.Web.Api
                         productViewModel.MetaDescription = workSheet.Cells[i, 10].Value.ToString();
                     }
 
-
                     bool.TryParse(workSheet.Cells[i, 11].Value.ToString(), out status);
-                    productViewModel.Status = status;
+                    productViewModel.Status = false;
 
                     bool.TryParse(workSheet.Cells[i, 12].Value.ToString(), out showHome);
                     productViewModel.HomeFlag = showHome;

@@ -66,4 +66,4 @@
             });
         }
     }
-}) (angular.module('techzone.common'));
+})(angular.module('techzone.common'));

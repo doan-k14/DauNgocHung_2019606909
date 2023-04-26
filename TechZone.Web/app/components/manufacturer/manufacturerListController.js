@@ -98,7 +98,7 @@
                     notificationService.displayWarning('Không có bản ghi nào được tìm thấy.');
                 }
                 $scope.manufacturer = result.data.Items;
-                
+
                 $scope.page = result.data.Page;
                 $scope.pagesCount = result.data.TotalPages;
                 $scope.totalCount = result.data.TotalCount;
@@ -107,12 +107,12 @@
                 $scope.loading = false;
             });
         }
-        function getProductCategory() {            
+        function getProductCategory() {
             apiService.get('/api/productcategory/getbyid/' + $stateParams.id, null, function (result) {
                 $scope.productCategory = result.data.Name;
-            }, function () {});
+            }, function () { });
         }
         getProductCategory();
         $scope.getManufacturer();
     }
-})(angular.module('techzone.product_categories'));
+})(angular.module('techzone.manufacturer'));

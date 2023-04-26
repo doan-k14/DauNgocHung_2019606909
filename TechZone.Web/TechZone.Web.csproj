@@ -449,6 +449,11 @@
     <Content Include="app\components\manufacturer\manufacturerEditView.html" />
     <Content Include="app\components\manufacturer\manufacturerListController.js" />
     <Content Include="app\components\manufacturer\manufacturerListView.html" />
+    <Content Include="app\components\order\order.module.js" />
+    <Content Include="app\components\order\orderDetailController.js" />
+    <Content Include="app\components\order\orderDetailView.html" />
+    <Content Include="app\components\order\orderListController.js" />
+    <Content Include="app\components\order\orderListView.html" />
     <Content Include="app\components\products\productImportController.js" />
     <Content Include="app\components\products\productImportView.html" />
     <Content Include="app\components\products\products.module.js" />
@@ -5285,7 +5290,6 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\components\orders\" />
     <Folder Include="app\components\roles\" />
     <Folder Include="app\components\users\" />
     <Folder Include="app\shared\footer\" />
@@ -5643,6 +5647,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\ShoppingCart\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TechZone.Common\TechZone.Common.csproj">

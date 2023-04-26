@@ -137,6 +137,18 @@
     <Compile Include="Migrations\202304211544013_iexcel.designer.cs">
       <DependentUpon>202304211544013_iexcel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304261400095_order.cs" />
+    <Compile Include="Migrations\202304261400095_order.designer.cs">
+      <DependentUpon>202304261400095_order.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304261428586_adminorder.cs" />
+    <Compile Include="Migrations\202304261428586_adminorder.designer.cs">
+      <DependentUpon>202304261428586_adminorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202304261449276_adm.cs" />
+    <Compile Include="Migrations\202304261449276_adm.designer.cs">
+      <DependentUpon>202304261449276_adm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationGroupRepository.cs" />
@@ -203,6 +215,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304211544013_iexcel.resx">
       <DependentUpon>202304211544013_iexcel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304261400095_order.resx">
+      <DependentUpon>202304261400095_order.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304261428586_adminorder.resx">
+      <DependentUpon>202304261428586_adminorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304261449276_adm.resx">
+      <DependentUpon>202304261449276_adm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using TechZone.Common;
 using TechZone.Data.Infracstructure;
 using TechZone.Data.Repositories;
@@ -17,7 +18,7 @@ namespace TechZone.Service
 
         IEnumerable<Product> GetAll();
 
-        IEnumerable<Product> GetAll(string keyword);
+        IEnumerable<Product> GetAll(string keyword, int categoryId = 0);
 
         IEnumerable<Product> GetLastest(int top);
 
@@ -28,7 +29,9 @@ namespace TechZone.Service
         IEnumerable<Product> Search(string keyword, int page, int pageSize, string sort, out int totalRow);
 
         IEnumerable<string> GetListProductByName(string name);
+
         IEnumerable<Product> GetListProduct(string keyword);
+
         IEnumerable<Product> GetReatedProducts(int id, int top);
 
         Product GetById(int id);
@@ -101,12 +104,22 @@ namespace TechZone.Service
             return _productRepository.GetAll();
         }
 
-        public IEnumerable<Product> GetAll(string keyword)
+        public IEnumerable<Product> GetAll(string keyword, int categoryId = 0)
         {
-            if (!string.IsNullOrEmpty(keyword))
-                return _productRepository.GetMulti(x => x.Name.Contains(keyword) || x.Description.Contains(keyword));
+            if (categoryId == 0)
+            {
+                if (!string.IsNullOrEmpty(keyword))
+                    return _productRepository.GetMulti(x => x.Name.Contains(keyword) || x.Description.Contains(keyword));
+                else
+                    return _productRepository.GetAll();
+            }
             else
-                return _productRepository.GetAll();
+            {
+                if (!string.IsNullOrEmpty(keyword))
+                    return _productRepository.GetMulti(x => (x.Name.Contains(keyword) || x.Description.Contains(keyword)) && x.CategoryID == categoryId);
+                else
+                    return _productRepository.GetMulti(x => x.CategoryID == categoryId);
+            }
         }
 
         public Product GetById(int id)
@@ -240,7 +253,7 @@ namespace TechZone.Service
             var model = _productRepository.GetListProductByTag(tagId, page, pagesize, out totalRow);
             return model;
         }
-        //statictis
+
         public bool SellProduct(int productId, int quantity)
         {
             var product = _productRepository.GetSingleById(productId);
@@ -249,6 +262,7 @@ namespace TechZone.Service
             product.Quantity -= quantity;
             return true;
         }
+
         public IEnumerable<Product> GetListProduct(string keyword)
         {
             IEnumerable<Product> query;
