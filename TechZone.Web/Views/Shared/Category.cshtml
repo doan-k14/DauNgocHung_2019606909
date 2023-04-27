@@ -19,7 +19,7 @@
                                 @foreach (var childCategory in childCategories)
                                 {
                                     var childUrl = "/" + childCategory.Alias + ".pc-" + childCategory.ID + ".html/";
-                                    <li class="subitem3"><a href="@childUrl">&nbsp;@childCategory.Name</a></li>
+                                    <li class="subitem3"><a href="@childUrl" style="text-align:center;">&nbsp;@childCategory.Name</a></li>
                                 }
                             </ul>
                         }

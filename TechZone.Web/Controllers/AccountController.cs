@@ -169,22 +169,23 @@ namespace TechZone.Web.Controllers
             var userId = User.Identity.GetUserId();
             var cart = new List<ShoppingCartViewModel>();
             var order = _orderService.GetOrderByUserId(userId);
-
-            var orderDetail = _orderService.GetAllOrderDetail(order.ID);
-
-            var orderDetailVm = _mappingService.Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(orderDetail);
-
-            foreach (var item in orderDetailVm)
+            if (order != null)
             {
-                if (item.IsOrder)
+                var orderDetail = _orderService.GetAllOrderDetail(order.ID);
+                var orderDetailVm = _mappingService.Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(orderDetail);
+
+                foreach (var item in orderDetailVm)
                 {
-                    var product = _productService.GetById(item.ProductID);
-                    cart.Add(new ShoppingCartViewModel
+                    if (item.IsOrder)
                     {
-                        ProductId = item.ProductID,
-                        Product = _mappingService.Mapper.Map<Product, ProductViewModel>(product),
-                        Quantity = item.Quantity
-                    });
+                        var product = _productService.GetById(item.ProductID);
+                        cart.Add(new ShoppingCartViewModel
+                        {
+                            ProductId = item.ProductID,
+                            Product = _mappingService.Mapper.Map<Product, ProductViewModel>(product),
+                            Quantity = item.Quantity
+                        });
+                    }
                 }
             }
             return View(cart);
