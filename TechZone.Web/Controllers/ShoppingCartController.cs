@@ -71,8 +71,10 @@ namespace TechZone.Web.Controllers
         public JsonResult CreateOrder(string orderViewModel)
         {
             var order = new JavaScriptSerializer().Deserialize<OrderViewModel>(orderViewModel);
+            order.CreatedDate = DateTime.Now;
             var orderNew = new Order();
-            var oldOrder = new Order();
+            //var oldOrder = new Order();
+            var oldOrder = new List<Order>();
 
             orderNew.UpdateOrder(order);
 
@@ -81,9 +83,10 @@ namespace TechZone.Web.Controllers
                 orderNew.CustomerID = User.Identity.GetUserId();
                 orderNew.CreatedBy = User.Identity.GetUserName();
 
-                oldOrder = _orderService.GetOrderByUserId(User.Identity.GetUserId());
-                oldOrder.UpdateOrder(order);
-                oldOrder.CustomerID = User.Identity.GetUserId();
+                //oldOrder = _orderService.GetOrderByUserId(User.Identity.GetUserId());
+                oldOrder = _orderService.GetListOrderByUserId(User.Identity.GetUserId()).ToList();
+                //oldOrder.UpdateOrder(order);
+                //oldOrder.CustomerID = User.Identity.GetUserId();
             }
 
             var cart = (List<ShoppingCartViewModel>)Session[CommonConstants.SessionCart];
@@ -107,18 +110,38 @@ namespace TechZone.Web.Controllers
             {
                 if (oldOrder != null)
                 {
-                    var orderDetail = _orderService.GetAllOrderDetail(oldOrder.ID);
-                    foreach (var item in orderDetail)
+                    //var orderDetail = _orderService.GetAllOrderDetail(oldOrder.ID);
+                    //foreach (var item in orderDetail)
+                    //{
+                    //    item.IsOrder = true;
+                    //    _orderService.UpdateOrderDetail(item);
+                    //}
+                    foreach (var item in oldOrder)
                     {
-                        item.IsOrder = true;
-                        _orderService.UpdateOrderDetail(item);
+                        bool check = false;
+                        var orderDetail = _orderService.GetAllOrderDetail(item.ID);
+                        foreach (var item1 in orderDetail)
+                        {
+                            if (!item1.IsOrder)
+                            {
+                                _orderService.DeleteOrderDetail(item1.OrderID, item1.ProductID);
+                                check = true;
+                            }
+                        }
+                        if (!check)
+                        {
+                            item.PaymentStatus = "true";
+                            _orderService.UpdateOrder(item);
+                            _orderService.Save();
+                        }
                     }
                 }
-                else
-                {
-                    _orderService.Create(orderNew, orderDetails);
-                }
-
+                //else
+                //{
+                //    _orderService.Create(orderNew, orderDetails);
+                //}
+                orderNew.PaymentStatus = "true";
+                _orderService.Create(orderNew, orderDetails);
                 _orderService.Save();
                 return Json(new
                 {
@@ -150,8 +173,10 @@ namespace TechZone.Web.Controllers
                 if (order != null)
                 {
                     var orderDetail = _orderService.GetAllOrderDetail(order.ID);
-
                     var orderDetailVm = _mappingService.Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(orderDetail);
+                    //var orderDetail = _orderService.GetAllOrderDetail(order.ID);
+
+                    //var orderDetailVm = _mappingService.Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(orderDetail);
 
                     foreach (var item in orderDetailVm)
                     {
@@ -315,6 +340,15 @@ namespace TechZone.Web.Controllers
                 {
                     if (item.ProductId == jitem.ProductId)
                     {
+                        var product = _productService.GetById(jitem.ProductId);
+                        if (product.Quantity < jitem.Quantity)
+                        {
+                            return Json(new
+                            {
+                                status = false,
+                                quantity = product.Quantity
+                            });
+                        }
                         item.Quantity = jitem.Quantity;
                     }
                 }

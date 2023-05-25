@@ -1,88 +1,50 @@
 ﻿@using Microsoft.AspNet.Identity;
-<div class="header">
-    <div class="top-header">
-        <div class="container">
-            <div class="top-header-left">
-                <ul class="support">
-                    <li><a href="#"><label> </label></a></li>
-                    <li><a href="#">24x7 live<span class="live"> support</span></a></li>
-                </ul>
-                <ul class="support">
-                    <li class="van"><a href="#"><label> </label></a></li>
-                    <li><a href="#">Free shipping <span class="live">on order over 500</span></a></li>
-                </ul>
-                <ul class="support">
-                    <li><a href="#"><label> </label></a></li>
-                    <li><a href="/gioi-thieu.html/">Giới thiệu</a></li>
-                </ul>
-                <ul class="support">
-                    <li><a href="#"><label> </label></a></li>
-                    <li><a href="/lien-he.html/">Liên hệ</a></li>
-                </ul>
-                <div class="clearfix"> </div>
+<div class="container">
+    <div class="row" >
+        <div class="col-lg-2">
+            <div class="header__logo">
+                <a href="/"><img src="~/Assets/client/images/logo.png" alt="" style="max-width: 150px; margin-top: 12px" ></a>
             </div>
-            <div class="top-header-right">
-                <div class="down-top">
-                    <select class="in-drop">
-                        <option value="English" class="in-of">English</option>
-                        <option value="Japanese" class="in-of">Japanese</option>
-                        <option value="French" class="in-of">French</option>
-                        <option value="German" class="in-of">German</option>
-                    </select>
-                </div>
-                <div class="down-top top-down">
-                    <select class="in-drop">
-
-                        <option value="Dollar" class="in-of">Dollar</option>
-                        <option value="Yen" class="in-of">Yen</option>
-                        <option value="Euro" class="in-of">Euro</option>
-                    </select>
-                </div>
-                <!---->
-                <div class="clearfix"> </div>
-            </div>
-            <div class="clearfix"> </div>
         </div>
-    </div>
-    <div class="bottom-header">
-        <div class="container">
-            <div class="header-bottom-left">
-                <div class="logo">
-                    <a href="/"><img src="/Assets/client/images/logo.png" alt=" " /></a>
-                </div>
-                <div class="search">
-                    <form method="get" action="/tim-kiem.html/">
-                        <input type="text" id="txtKeyword" name="keyword" placeholder="Từ khóa">
-                        <input type="submit" value="Tìm kiếm" id="btnSearch">
-                    </form>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
-            <div class="header-bottom-right">
-                <div class="cart"><a href="/gio-hang.html/"><span> </span>GIỎ HÀNG</a></div>
-                @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @id = "frmLogout", action = "/Account/LogOut/" }))
-                {
-                    if (Request.IsAuthenticated)
+        <div class="col-lg-10">
+            <nav class="header__menu">
+                <ul>
+                    @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { @id = "frmLogout", action = "/Account/LogOut/" }))
                     {
-                        @Html.AntiForgeryToken()
-                        <ul class="account">
-                            <li><a href="/tai-khoan.html/"><span> </span>Xin chào: @User.Identity.GetUserName()</a></li> |
-                            <li><a href="#" id="btnLogout">Thoát</a></li>
-                        </ul>
+                        if (Request.IsAuthenticated)
+                        {
+                            <li style="width: 10%"> <a href="/">Home</a></li>
+                            <li style="width: 10%"><a href="/chat-gpt.html/">Chat GPT</a></li>
 
-                    }
-                    else
-                    {
-                        <ul class="login">
-                            <li><a href="/dang-nhap.html/"><span> </span>ĐĂNG NHẬP</a></li> |
-                            <li><a href="/dang-ky.html/">ĐĂNG KÝ</a></li>
-                        </ul>
-                    }
-                }
+                            @*<li>
+                    <a href="#">Pages</a>
+                    <ul class="header__menu__dropdown">
+                        <li><a href="./shop-details.html">Shop Details</a></li>
+                        <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                        <li><a href="./checkout.html">Check Out</a></li>
+                        <li><a href="./blog-details.html">Blog Details</a></li>
+                    </ul>
+                </li>*@
+                            <li style="width: 10%"><a href="/lien-he.html/">Liên hệ</a></li>
+                            @Html.AntiForgeryToken()
+                            <li style="width: 12%"><a href="/tai-khoan.html/">Đơn hàng</a></li>
 
-                <div class="clearfix"> </div>
-            </div>
-            <div class="clearfix"> </div>
+                            <li style="width: 22%;"><a href="/tai-khoan.html/"><span> </span>Xin chào: @User.Identity.GetUserName()</a></li>
+
+                            <li style="width: 6%"><a href="#" id="btnLogout">Thoát</a></li>
+                        }
+                        else
+                        {
+                            <li style="width: 20%"><a href="/">Home</a></li>
+                            <li style="width: 20%"><a href="/lien-he.html/">Liên hệ</a></li>
+                            <li style="width: 20%"><a href="/dang-nhap.html/"><span> </span>ĐĂNG NHẬP</a></li>
+                            <li style="width: 20%"><a href="/dang-ky.html/">ĐĂNG KÝ</a></li>
+                        }
+                    }
+                </ul>
+
+            </nav>
         </div>
+
     </div>
 </div>

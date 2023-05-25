@@ -18,11 +18,9 @@ namespace TechZone.Web.Controllers
         }
 
         // GET: Page
-        public ActionResult Index(string alias)
+        public ActionResult Index()
         {
-            var page = _pageService.GetByAlias(alias);
-            var model = _mappingService.Mapper.Map<Page, PageViewModel>(page);
-            return View(model);
+            return View();
         }
     }
 }

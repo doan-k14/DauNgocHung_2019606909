@@ -1,11 +1,10 @@
 ﻿  <!-- Content Header (Page header) -->
 <section class="content-header" style="height: 40px;">
     <h1>
-        {{productCategory}}
+        Hãng sản xuất  
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/admin"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-        <li><a href="javascript:void(0);">Sản phẩm</a></li>
         <li><a ui-sref="product_categories">Danh mục</a></li>
         <li class="active">{{productCategory}}</li>
     </ol>
@@ -14,23 +13,22 @@
 <section class="content">
     <!-- Default box -->
     <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Hãng sản xuất</h3>
+        <div class="box-header with-border" style="margin-left: 30%">
+            <h3 class="box-title">Danh mục: {{productCategory}}</h3>
         </div>
         <div class="box-body">
             <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="input-group">
                         <input type="text" class="form-control" ng-model="keyword" placeholder="Từ khóa">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="search()">Tìm kiếm</button>
+                            <button class="btn btn-default" type="button" ng-click="search()" style="width: 80px; background: #40a2f8; color: white">Tìm</button>
                         </span>
                     </div><!-- /input-group -->
-                </div>
-                <div class="col-md-6">
-                    <button class="btn btn-success" ui-sref="add_manufacturer({id:productCategoryId})">Thêm mới</button>
+                    <br />
+                    <button class="btn btn-success" ui-sref="add_manufacturer({id:productCategoryId})" style="width: 160px; background: #40a2f8; border:none; margin-right:10px; float: left"><i class="fa fa-plus"></i>&nbsp; Thêm mới</button>
                     <button class="btn btn-danger" ng-click="deleteMultiple()" id="btnDelete" disabled>Xóa</button>
-                </div>
+                </div>    
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -39,21 +37,21 @@
                             <td><input name="all" type="checkbox" ng-click="selectAll()" /></td>
                             <th style="width: 5%">ID</th>
                             <th style="width: 20%">Tên hãng sản xuất</th>
-                            <th style="width: 30%">Mô tả</th>
+                            <th style="width: 15%">Thứ tự xuất hiện</th>
                             <th style="width: 15%">Ngày tạo</th>
-                            <th style="width: 10%">Sản phẩm</th>
-                            <th style="width: 10%">Trạng thái</th>
-                            <th style="width: 10%">Thao tác</th>
+                            <th style="width: 15%">Sản phẩm thuộc hãng</th>
+                            <th style="width: 15%">Trạng thái</th>
+                            <th style="width: 15%">Thao tác</th>
                         </tr>
                         <tr ng-repeat="item in manufacturer">
                             <td><input type="checkbox" ng-model="item.checked" name="all" /></td>
                             <td>{{item.ID}}</td>
                             <td><a ui-sref="edit_manufacturer({idCategory:productCategoryId, idManufacturer:item.ID})">{{item.Name}}</a></td>
-                            <td>{{item.Decription}}</td>
+                            <td>{{item.DisplayOrder}}</td>
                             <td>
-                                {{item.CreatedDate  | date:'dd/MM/yyyy hh:mm:ss'}}
+                                {{item.CreatedDate  | date:'dd/MM/yyyy'}}
                             </td>
-                            <td><a ui-sref="products({categoryId:item.ID})">Xem tất cả</a></td>
+                            <td><a ui-sref="products({categoryId:item.ID})">Xem</a></td>
                             <!--class="badge bg-red"-->
                             <td>
                                 <span ng-class="{'badge bg-red':item.Status==false,'badge bg-green':item.Status==true}">
@@ -67,7 +65,7 @@
                         </tr>
                         <tfoot>
                             <tr>
-                                <td colspan="7"><span class="pull-right">Trang: {{page+1}} - Tổng số bản ghi: {{totalCount}}</span></td>
+                                <td colspan="7"><span class="pull-right">Trang: {{page+1}} - Số hãng sản xuất danh mục {{productCategory}}: {{totalCount}}</span></td>
                             </tr>
                         </tfoot>
                     </table>

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title</title>
+    <title></title>
     <meta name="description" content="@ViewBag.MetaKeyword">
     <meta name="keywords" content="@ViewBag.MetaDescription">
     @Styles.Render("~/css/base")
@@ -22,10 +22,10 @@
     <!--header-->
     @{Html.RenderAction("Header", "Home");}
     <!---->
-    <div class="container">
+
+        @*@{Html.RenderAction("Category", "Home");}*@
         @RenderBody()
-        @{Html.RenderAction("Category", "Home");}
-    </div>
+
 
     @{ Html.RenderAction("Footer", "Home");}
     <div class="clearfix"> </div>

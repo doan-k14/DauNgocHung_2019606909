@@ -1,11 +1,11 @@
 ﻿  <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Danh sách người dùng
+        Danh sách tài khoản
     </h1>
     <ol class="breadcrumb">
         <li><a href="#/admin"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
-        <li class="active">Danh sách người dùng</li>
+        <li class="active">Danh sách tài khoản</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -13,20 +13,23 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Danh mục người dùng</h3>
+            
         </div>
         <div class="box-body">
             <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="input-group">
                         <input type="text" id="txtSearch" ng-model="filterExpression" class="form-control" placeholder="Từ khóa" />
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="search()">Tìm kiếm</button>
+                            <button class="btn btn-default" type="button" ng-click="search()" style="width: 80px; background: #40a2f8; color: white">Tìm</button>
                         </span>
                     </div><!-- /input-group -->
+                    <br />
+                    <button class="btn btn-success" ui-sref="add_application_user" style="width: 160px; background: #40a2f8; border:none"><i class="fa fa-plus"></i>&nbsp; Thêm mới</button>
+                    <button class="btn btn-danger" ng-click="deleteMultiple()" id="btnDelete" disabled>Xóa</button>
                 </div>
-                <div class="col-md-6">
-                    <button class="btn btn-success" ui-sref="add_application_user"><i class="fa fa-plus"></i> Thêm mới</button>
+                <div class="col-md-4">
+                    
                 </div>
             </div>
             <div class="row">
@@ -34,16 +37,20 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <td><input name="all" type="checkbox" ng-click="selectAll()" /></td>
                                 <th>Tên người dùng</th>
                                 <th>Tài khoản</th>
+                                <th>Số điện thoại</th>
                                 <th>Email</th>
-                                <th style="width:10%"></th>
+                                <th style="width:15%"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in data | filter:filterExpression">
+                                <td><input type="checkbox" ng-model="item.checked" name="all" /></td>
                                 <td><a ui-sref="edit_application_user({id:item.Id})">{{item.FullName}}</a></td>
                                 <td><a ui-sref="edit_application_user({id:item.Id})">{{item.UserName}}</a></td>
+                                <td><a ui-sref="edit_application_user({id:item.Id})">{{item.PhoneNumber}}</a></td>
                                 <td>{{item.Email}}</td>
                                 <td>
                                     <a ui-sref="edit_application_user({id:item.Id})" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></a>

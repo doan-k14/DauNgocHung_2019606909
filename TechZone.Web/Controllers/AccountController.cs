@@ -13,6 +13,7 @@ using TechZone.Common;
 using TechZone.Model.Models;
 using TechZone.Service;
 using TechZone.Web.App_Start;
+using TechZone.Web.Infrastructure.Core;
 using TechZone.Web.Mappings;
 using TechZone.Web.Models;
 
@@ -167,28 +168,45 @@ namespace TechZone.Web.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var cart = new List<ShoppingCartViewModel>();
-            var order = _orderService.GetOrderByUserId(userId);
+            var order = _orderService.GetListOrderByUserId(userId);
+
+            List<CartOrder> listCart = new List<CartOrder>();
+
             if (order != null)
             {
-                var orderDetail = _orderService.GetAllOrderDetail(order.ID);
-                var orderDetailVm = _mappingService.Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(orderDetail);
-
-                foreach (var item in orderDetailVm)
+                foreach (var item in order)
                 {
-                    if (item.IsOrder)
+                    if (item.PaymentStatus != null)
                     {
-                        var product = _productService.GetById(item.ProductID);
-                        cart.Add(new ShoppingCartViewModel
+                        var orderDetail = _orderService.GetAllOrderDetail(item.ID);
+                        var orderDetailVm = _mappingService.Mapper.Map<IEnumerable<OrderDetail>, IEnumerable<OrderDetailViewModel>>(orderDetail);
+
+                        var cart = new List<ShoppingCartViewModel>();
+
+                        foreach (var item1 in orderDetailVm)
                         {
-                            ProductId = item.ProductID,
-                            Product = _mappingService.Mapper.Map<Product, ProductViewModel>(product),
-                            Quantity = item.Quantity
+                            if (item1.IsOrder)
+                            {
+                                var product = _productService.GetById(item1.ProductID);
+                                cart.Add(new ShoppingCartViewModel
+                                {
+                                    ProductId = item1.ProductID,
+                                    Product = _mappingService.Mapper.Map<Product, ProductViewModel>(product),
+                                    Quantity = item1.Quantity
+                                });
+                            }
+                        }
+                        listCart.Add(new CartOrder
+                        {
+                            Id = "Tech" + item.ID,
+                            OrderDate = item.CreatedDate,
+                            Status = item.Status,
+                            Cart = cart
                         });
                     }
                 }
             }
-            return View(cart);
+            return View(listCart.AsEnumerable());
         }
     }
 }

@@ -48,7 +48,7 @@ namespace TechZone.Web
             );
             routes.MapRoute(
                 name: "Page",
-                url: "trang/{alias}.html",
+                url: "chat-gpt.html",
                 defaults: new { controller = "Page", action = "Index", alias = UrlParameter.Optional },
                 namespaces: new string[] { "TechZone.Web.Controllers" }
             );

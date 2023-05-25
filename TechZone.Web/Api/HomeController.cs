@@ -19,7 +19,7 @@ namespace TechZone.Web.Api
         [Route("TestMethod")]
         public string TestMethod()
         {
-            return "Hello, TECHZONE Member. ";
+            return "Hello, TECHNOLOGY Member. ";
         }
     }
 }

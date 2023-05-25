@@ -39,11 +39,14 @@ namespace TechZone.Web.Controllers
             homeViewModel.Slides = slideView;
 
             var lastestProductModel = _productService.GetLastest(3);
-            var topSaleProductModel = _productService.GetHotProduct(3);
+            var topSaleProductModel = _productService.GetHotProduct(8);
+            var mostViewProductModel = _productService.GetMostView(3);
             var lastestProductViewModel = _mappingService.Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(lastestProductModel);
             var topSaleProductViewModel = _mappingService.Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(topSaleProductModel);
+            var mostViewProducViewtModel = _mappingService.Mapper.Map<IEnumerable<Product>, IEnumerable<ProductViewModel>>(mostViewProductModel);
             homeViewModel.LastestProducts = lastestProductViewModel;
             homeViewModel.TopSaleProducts = topSaleProductViewModel;
+            homeViewModel.MostViewProduct = mostViewProducViewtModel;
 
             try
             {

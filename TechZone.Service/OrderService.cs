@@ -19,6 +19,7 @@ namespace TechZone.Service
         IEnumerable<Order> GetAllOrder();
 
         Order GetOrderById(int id);
+        IEnumerable<Order> GetListOrderByUserId(string id);
 
         Order GetOrderByUserId(string id);
 
@@ -63,6 +64,7 @@ namespace TechZone.Service
                 foreach (var orderDetail in orderDetails)
                 {
                     orderDetail.OrderID = order.ID;
+                    orderDetail.IsOrder = true;
                     _orderDetailRepository.Add(orderDetail);
                 }
                 return true;
@@ -108,9 +110,10 @@ namespace TechZone.Service
             return _orderRepository.GetSingleById(id);
         }
 
-        public Order GetOrderByUserId(string id)
+        public IEnumerable<Order> GetListOrderByUserId(string id)
         {
-            return _orderRepository.GetSingleByCondition(o => o.CustomerID == id);
+            //return _orderRepository.GetSingleByCondition(o => o.CustomerID == id);
+            return _orderRepository.GetMulti(o => o.CustomerID == id);
         }
 
         public OrderDetail GetOrderDetailByProductId(int orderId, int productId)
@@ -131,6 +134,10 @@ namespace TechZone.Service
         public void UpdateOrderDetail(OrderDetail orderDetail)
         {
             _orderDetailRepository.Update(orderDetail);
+        }
+        public Order GetOrderByUserId(string id)
+        {
+            return _orderRepository.GetSingleByCondition(o => o.CustomerID == id && o.PaymentStatus == null);
         }
     }
 }

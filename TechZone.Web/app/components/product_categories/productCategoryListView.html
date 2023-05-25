@@ -14,40 +14,47 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Danh mục sản phẩm</h3>
+            
         </div>
         <div class="box-body">
             <div class="row" style="margin-bottom: 10px;">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="input-group">
                         <input type="text" class="form-control" ng-model="keyword" placeholder="Từ khóa">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button" ng-click="search()">Tìm kiếm</button>
+                            <button class="btn btn-default" type="button" ng-click="search()" style="width: 80px; background: #40a2f8; color: white">Tìm</button>
                         </span>
                     </div><!-- /input-group -->
+          
+                 <br />
+                <button class="btn btn-success" ui-sref="add_product_category" style="width: 160px; background: #40a2f8; border:none; margin-right:10px; float: left"><i class="fa fa-plus"></i>&nbsp; Thêm mới</button>
+                <button class="btn btn-danger" ng-click="deleteMultiple()" id="btnDelete" disabled>Xóa</button>
+
                 </div>
-                <div class="col-md-6">
-                    <button class="btn btn-success" ui-sref="add_product_category">Thêm mới</button>
-                    <button class="btn btn-danger" ng-click="deleteMultiple()" id="btnDelete" disabled>Xóa</button>
-                </div>
-            </div>
+                  </div>
             <div class="row">
                 <div class="col-md-12">
                     <table class="table table-bordered">
                         <tr>
                             <td><input name="all" type="checkbox" ng-click="selectAll()" /></td>
                             <th style="width: 5%">ID</th>
-                            <th style="width: 55%">Tên danh mục</th>
-                            <th style="width: 20%">Ngày tạo</th>
-                            <th style="width: 10%">Trạng thái</th>
-                            <th style="width: 10%">Thao tác</th>
+                            <th style="width: 30%">Tên danh mục</th>
+                            <th style="width: 15%">Hãng sản xuất</th>
+                            <th style="width: 10%">Thứ tự</th>
+                            <th style="width: 15%">Ngày tạo</th>
+                            <th style="width: 12%">Trạng thái</th>
+                            <th style="width: 12%">Thao tác</th>
                         </tr>
                         <tr ng-repeat="item in productCategories">
                             <td><input type="checkbox" ng-model="item.checked" name="all" /></td>
                             <td>{{item.ID}}</td>
                             <td><a ui-sref="manufacturer({id:item.ID})">{{item.Name}}</a></td>
                             <td>
-                                {{item.CreatedDate  | date:'dd/MM/yyyy hh:mm:ss'}}
+                                <a ui-sref="manufacturer({id:item.ID})">Truy cập</a>
+                            </td>
+                            <td>{{item.DisplayOrder}}</td>
+                            <td>
+                                {{item.CreatedDate  | date:'dd/MM/yyyy'}}
                             </td>
                             <!--class="badge bg-red"-->
                             <td>
@@ -62,7 +69,7 @@
                         </tr>
                         <tfoot>
                             <tr>
-                                <td colspan="6"><span class="pull-right">Trang: {{page+1}} - Tổng số bản ghi: {{totalCount}}</span></td>
+                                <td colspan="6"><span class="pull-right">Trang: {{page+1}} - Số danh mục: {{totalCount}}</span></td>
                             </tr>
                         </tfoot>
                     </table>

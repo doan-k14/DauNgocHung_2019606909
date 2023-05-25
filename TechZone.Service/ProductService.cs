@@ -31,7 +31,7 @@ namespace TechZone.Service
         IEnumerable<string> GetListProductByName(string name);
 
         IEnumerable<Product> GetListProduct(string keyword);
-
+        IEnumerable<Product> GetMostView(int top);
         IEnumerable<Product> GetReatedProducts(int id, int top);
 
         Product GetById(int id);
@@ -167,7 +167,10 @@ namespace TechZone.Service
         {
             return _productRepository.GetMulti(x => x.Status && x.HotFlag == true).OrderByDescending(x => x.CreatedDate).Take(top);
         }
-
+        public IEnumerable<Product> GetMostView(int top)
+        {
+            return _productRepository.GetMulti(x => x.Status).OrderByDescending(x => x.ViewCount).Take(top);
+        }
         public IEnumerable<Product> GetListProductByCategoryIdPaging(int categoryId, int page, int pageSize, string sort, out int totalRow)
         {
             var query = _productRepository.GetMulti(x => x.Status && x.CategoryID == categoryId);
@@ -225,8 +228,39 @@ namespace TechZone.Service
 
         public IEnumerable<Product> GetReatedProducts(int id, int top)
         {
+            //var product = _productRepository.GetSingleById(id);
+
+            //var listCate = _productRepository.GetMulti(x => x.Status && x.ID != id && x.CategoryID == product.CategoryID);
+            //var listCate2 = listCate.Concat(_productRepository.GetMulti(x => x.Status && x.ID != id && x.CategoryID == product.ProductCategory.ParentID)); 
+            //var listCate3 = listCate2.Concat(_productRepository.GetMulti(x => x.Status && x.ID != id && x.Name.Contains(product.Name)));
+            //var listCate4 = listCate3.Concat(_productRepository.GetMulti(x => x.Status && x.ID != id && x.Tags.Contains(product.Tags)));
+
+
+            //var count = listCate.Count();
+            //var count2 = listCate2.Count();
+            //var count3 = listCate3.Count();
+            //var end = listCate2.Count();
+            //var recommend = _productRepository.GetAll().Concat(listCate2);
+            //if (count >= 1)
+            //{
+            //    return _productRepository.GetMulti(x => x.Status && x.ID != id && x.CategoryID == product.CategoryID).OrderByDescending(x => x.CreatedDate).Take(top);
+
+            //}
+            //else if(count2 >= 2)
+            //{
+            //    return listCate2.Take(top);
+            //}
+            //else 
+            //{
+            //    return listCate3.Take(top);
+            //}
+            ////else
+            ////{
+            ////    return recommend.Take(top);
+            ////}
             var product = _productRepository.GetSingleById(id);
             return _productRepository.GetMulti(x => x.Status && x.ID != id && x.CategoryID == product.CategoryID).OrderByDescending(x => x.CreatedDate).Take(top);
+
         }
 
         public IEnumerable<Tag> GetListTagByProductId(int id)
